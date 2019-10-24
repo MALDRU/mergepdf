@@ -55,9 +55,7 @@ func mergePDFS(folder string) error {
 	}
 	fmt.Println("------------------ INICIA COMBINADO ", folder, " -----------------------")
 	nameFac := namePrefix + folder
-	pdfs := make([]string, 3)
-	pdfs[0] = "merge"
-	pdfs[1] = out + nameFac + ".pdf"
+	pdfs := make([]string, 1)
 	c := 0
 	lastFile := ""
 	for _, file := range files {
@@ -65,12 +63,14 @@ func mergePDFS(folder string) error {
 		fmt.Println("Archivo encontrado: ", file.Name())
 		lastFile = file.Name()
 		if nameWithoutExt(file.Name()) == nameFac {
-			pdfs[2] = folder + "/" + lastFile
+			pdfs[0] = folder + "/" + lastFile
 		} else {
 			pdfs = append(pdfs, folder+"/"+lastFile)
 		}
 	}
 	if c > 1 {
+		pdfs = append(pdfs, "output")
+		pdfs = append(pdfs, out+nameFac+".pdf")
 		cmd := exec.Command("corepdf", pdfs...)
 		cmdOutput := &bytes.Buffer{}
 		cmd.Stdout = cmdOutput
