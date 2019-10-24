@@ -81,7 +81,7 @@ func mergePDFS(folder string) error {
 		}
 		fmt.Print(string(cmdOutput.Bytes()))
 	} else {
-		copy(lastFile, out+lastFile)
+		copy(folder + "/" +lastFile, out+lastFile)
 	}
 
 	fmt.Println("------------------ FIN COMBINADO -----------------------")
